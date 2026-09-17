@@ -104,19 +104,21 @@ fi
         <div className="flex items-start gap-3">
           <ShieldAlert className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-red-400">Fixing the "sudo: unable to load libpam.so.0" Chromebook Error</h3>
-            <p className="text-[13px] text-red-200/80 leading-relaxed">
-              If you receive an <code className="bg-red-950/80 px-1 py-0.5 rounded font-mono text-xs">Input/output error</code> or a fatal <code className="bg-red-950/80 px-1 py-0.5 rounded font-mono text-xs">sudoers.so</code> / <code className="bg-red-950/80 px-1 py-0.5 rounded font-mono text-xs">libpam</code> error when trying to run the script, your ChromeOS Linux container is severely corrupted and is blocking Administrator access.
+            <h3 className="text-sm font-bold text-red-400 uppercase tracking-wider">CRITICAL: Fix "sudo: unable to load libpam" Error</h3>
+            <p className="text-[13px] text-red-200/90 leading-relaxed font-medium">
+              If your terminal says <code className="bg-red-950/80 px-1 py-0.5 rounded font-mono text-xs text-red-300">Input/output error</code> or <code className="bg-red-950/80 px-1 py-0.5 rounded font-mono text-xs text-red-300">Is a directory</code>, your Chromebook's Linux hard drive is completely corrupted. <strong>The script is not broken, your Chromebook OS is blocking everything.</strong> You cannot type any commands until you factory reset the container.
             </p>
-            <div className="bg-black/40 border border-red-900/30 rounded-md p-3 text-xs space-y-2 text-neutral-300 mt-2">
-              <p className="font-semibold text-neutral-200">How to fix it instantly:</p>
-              <ol className="list-decimal pl-4 space-y-1.5">
-                <li>Open your Chromebook <strong>Settings</strong>.</li>
+            <div className="bg-black/60 border border-red-900/50 rounded-md p-4 space-y-3 mt-2 shadow-inner">
+              <p className="font-bold text-red-400 text-sm">Follow these exact 4 steps right now (Takes 60 seconds):</p>
+              <ol className="list-decimal pl-5 space-y-2 text-sm text-neutral-200 font-medium">
+                <li>Close the terminal. Open your main Chromebook <strong>Settings</strong> gear icon.</li>
                 <li>Go to <strong>Advanced</strong> → <strong>Developers</strong> → <strong>Linux development environment</strong>.</li>
-                <li>Click <span className="text-red-400 font-semibold">Remove Linux development environment</span> and hit Delete.</li>
-                <li>Once deleted, click <span className="text-emerald-400 font-semibold">Turn On</span> to install a fresh, clean Linux container.</li>
-                <li>Open Terminal again and run the 1-Line command below. It will now work perfectly.</li>
+                <li>Click <span className="text-red-400 font-bold bg-red-950/40 px-1.5 py-0.5 rounded">Remove Linux development environment</span> and hit Delete.</li>
+                <li>Wait for it to delete. Then click <span className="text-emerald-400 font-bold bg-emerald-950/40 px-1.5 py-0.5 rounded">Turn On</span> to install a fresh, uncorrupted Linux terminal.</li>
               </ol>
+              <p className="text-xs text-emerald-400/90 font-medium pt-2 border-t border-red-900/30">
+                Once the fresh terminal opens, DO NOT type chmod or sudo manually. Just click "Copy 1-Liner" below and paste it in.
+              </p>
             </div>
           </div>
         </div>
