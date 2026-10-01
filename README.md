@@ -130,3 +130,16 @@ npm run build
 npm start
 ```
 
+## 🧭 Guided Flash Workflow (Web UI)
+
+The **Flashing Studio** tab now walks through a 6-step wizard — Detect → Pre-flight → Firmware → Safety → Flash → Result — against the **real** backend. Nothing is simulated:
+
+1. **Detect** — scans the host USB bus (`lsusb`) and ADB daemon for Samsung hardware (VID `04e8`). No device found = the workflow stops with guidance.
+2. **Pre-flight** — live probes: Linux host, `heimdall`/`adb`/`fastboot`/`lsusb` toolchain, root or udev-rule USB privileges, and the device itself (`GET /api/flash/preflight`). Flashing is blocked until failing checks are resolved.
+3. **Firmware** — point to image files **on the host** (absolute paths). Each file is validated server-side: existence, size, binary type sniff (ZIP/TAR/sparse/ext4), and SHA-256 — optionally compared against an expected checksum (`POST /api/firmware/validate`).
+4. **Safety** — destructive operations (Total Clean Reinstall, Factory Reset, Stock Restore) show a prominent red warning and require typing `ERASE` plus an acknowledgement checkbox before the flash is armed.
+5. **Flash** — streams `POST /api/flash/stream` (SSE): real pre-flight → server-side firmware re-validation → real `heimdall` commands with live stdout, per-step progress, and honest abort codes (`NEEDS_CONFIRMATION`, `PREFLIGHT_FAILED`, `FIRMWARE_INVALID`, `COMMAND_FAILED`). It never reports success it didn't earn.
+6. **Result** — outcome summary with next steps.
+
+> Actual flashing requires a physical Samsung device in Download Mode attached to the Linux host. Without hardware, the backend honestly reports `PREFLIGHT_FAILED` — it will not fake a flash.
+
